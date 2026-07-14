@@ -10,7 +10,7 @@
 | ID   | Task                                                              | Priority | Depends On | Status      |
 |------|--------------------------------------------------------------------|----------|------------|-------------|
 | T001 | Locate "Immediate Superior" dropdown source                       | HIGH     | none       | COMPLETE    |
-| T002 | Add "Marc Dhaniel Batac" to Immediate Superior dropdown             | HIGH     | T001       | COMPLETE    |
+| T002 | Add a new employee to Immediate Superior dropdown                  | HIGH     | T001       | COMPLETE    |
 | T003 | Hide 3 Immediate Superior options (reversible)                     | MEDIUM   | T001       | COMPLETE    |
 | T004 | Build `_brain` memory system into real project state                | HIGH     | none       | COMPLETE    |
 | T005 | Build UI backup/revert tooling (ui-backup.ps1 / ui-restore.ps1)     | HIGH     | none       | COMPLETE    |

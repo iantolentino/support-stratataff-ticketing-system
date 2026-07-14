@@ -18,7 +18,7 @@ Known dumps:
   dropdown edits (T002/T003). Pre-layout-overhaul restore point only, NOT current state.
 - `_brain/db_backup/stratast_support.sql` — dated 2026-07-14 09:52, CURRENT/live dump. Already
   imported into local XAMPP/phpMyAdmin `stratast_support` DB — verified to include T002 (Marc
-  Dhaniel Batac added) and T003 (Georgia Galang, Irish Nicolette Sicat, Rosallie Chua hidden via
+  a new employee added) and T003 (3 employees hidden via
   `custom_field = -39`). This is the DB to test layout/DB changes against going forward.
 
 ## Restore Procedure

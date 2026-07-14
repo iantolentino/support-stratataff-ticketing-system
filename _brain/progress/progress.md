@@ -21,8 +21,8 @@
 | ID   | Task                                                                 | Date Completed |
 |------|-----------------------------------------------------------------------|----------------|
 | T001 | Located "Immediate Superior" dropdown (SupportCandy custom field 39, table `psmsc_options`) | 2026-07-13 |
-| T002 | Added new option "Marc Dhaniel Batac" to Immediate Superior dropdown (local DB) | 2026-07-13 |
-| T003 | Hid 3 options (Georgia Galang, Irish Nicolette Sicat, Rosallie Chua) via `custom_field = -39` trick, reversible | 2026-07-13 |
+| T002 | Added a new employee to the Immediate Superior dropdown (local DB) | 2026-07-13 |
+| T003 | Hid 3 employee options via `custom_field = -39` trick, reversible | 2026-07-13 |
 | T004 | Built `_brain` memory system into real project state (app_context, architecture, scope, decisions, commands) | 2026-07-14 |
 | T005 | Built UI backup/revert tooling (`_brain/tools/ui-backup.ps1`, `ui-restore.ps1`) for safe layout testing before live deploy | 2026-07-14 |
 | T006 | Restyled ticket list table (`.wpsc-ticket-list-tbl` in `framework/style.css`) — rounded borders, styled header, zebra striping, hover state. Verified visually via automated Playwright screenshot (local admin login) on both wp-admin and front-end `/tickets/?wpsc-section=ticket-list` (shares same CSS class) | 2026-07-14 |
