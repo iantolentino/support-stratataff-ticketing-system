@@ -1,0 +1,4 @@
+# This repo intentionally tracks only the layout-customization work, not the full
+# WordPress install (core files, uploads, unmodified plugins, DB dumps).
+# Everything is ignored by default; specific files are force-added explicitly.
+/*
