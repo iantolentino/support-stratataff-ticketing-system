@@ -23,7 +23,7 @@ Status: `FIXED` | `WORKAROUND` (not a real fix, revisit) | `SUPERSEDED` (see lin
 
 | ID | Title | Category | Root Cause (1 line) | Detail File | Date | Status |
 |----|-------|----------|----------------------|-------------|------|--------|
-| | | | | | | |
+| F001 | Global navbar (T016) caused blank white page on all 4 front-end pages | WEB | Navbar was JS-inserted as the very first child of `<body>` in normal document flow (`insertBefore(el, body.firstChild)`) with a `float:left; width:100%` rule inherited from SupportCandy's own CSS — interacting badly with the page's own layout (Elementor canvas / theme block layout) and collapsing the rest of the page content. Not exhaustively root-caused; fixed by removing the risk class entirely rather than chasing the exact interaction. | inline | 2026-07-15 | FIXED |
 
 ---
 

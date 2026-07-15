@@ -8,6 +8,9 @@
 ## In Scope — MVP
 - [x] Full layout/visual overhaul of the WordPress ticketing site (SupportCandy admin + front-end
   ticket pages, all screens) — visual/CSS/markup only, not just the new-ticket page
+- [x] Extended 2026-07-15: uniform design across ALL front-end pages of the site, not just Tickets
+  — Home/Support (2281), Forms (2102), IT Forms (2156), Tickets (5422). See
+  `decisions/decision_log.md` [SCOPE] entry 2026-07-15.
 - [x] Test every layout change locally (XAMPP, DB `stratast_support`) first, then deploy to the
   live cPanel-hosted site
 - [x] A revert mechanism: before any layout file is changed, back it up so a failed change can be

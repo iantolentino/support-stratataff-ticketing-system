@@ -6,7 +6,11 @@
 ---
 
 ## Active Task
-> None — awaiting user's next layout target (single ticket/thread view, or global CSS pass)
+> None — T016 narrowed to Home (2281) + Tickets (5422) only per explicit user request; Forms
+> (2102)/IT Forms (2156) fully reverted/untouched. Current local checkpoint: `_brain/ui_backups/
+> wp-content/mu-plugins/wpsc-global-navbar.php/20260715-080652__wpsc-global-navbar.php` — restore
+> with `ui-restore.ps1` (NOT git; this file is intentionally not committed, see decision_log.md
+> [SECURITY] 2026-07-15 — it contains real employee names, repo is public).
 
 ---
 
@@ -41,6 +45,8 @@
 | T013 | Full app-shell + navbar redesign per explicit user feedback ("still looks boxed", "blue navbar is bad", "move sidebar panels into navbar"): new isolated file `wp-content/mu-plugins/wpsc-navbar-redesign.php` — (1) removed the "boxed card" look (`.wpsc-shortcode-container` now full-bleed: no border-radius/shadow/margin), sidebar column (`elementor-element-0d2c8e0`) hidden and main content column (`elementor-element-279585d`) expanded to 100% width so the table now shows every column including Date Updated/Created; (2) replaced the flat solid-blue `.wpsc-header` with a clean white navbar + bottom border matching the artifact's "Modern Table" mockup exactly (light active/hover pill states, not white-on-blue) — user explicitly asked to match the mockup's navbar while keeping our existing small top-left logo; (3) relocated the "Assisting Ticket #" and "Canned Reply Templates" panels (moved the actual existing DOM nodes, not duplicated) into two new navbar dropdown buttons, freeing the sidebar space entirely. Fixed a bug where the "Assisting Ticket #" panel didn't relocate (wrong selector `.wpsc-helper-panel`, an orphaned class from an abandoned `post_content` edit that Elementor never renders — real class is `.tdp-panel` from `text-display-plugin.php`), and a bug where both dropdown panels rendered empty (they're native `<details>`, default closed, and hiding their `<summary>` toggle meant no way to open them — now forced `.open = true` on relocation). Verified both dropdowns open with correct content via Playwright | 2026-07-14 |
 | T013b | Fixed two bugs surfaced by user right after T013 shipped: (1) theme toggle button was invisible (still styled white-icon-on-white for the old dark/blue navbar, invisible on the new white one) — recolored to match the new navbar's neutral palette, with its own dark-mode variant; button position confirmed already correct (immediately left of Logout, i.e. "beside" it, per user's request). (2) Large vertical gap between the small top-left logo and the navbar — reduced the Elementor logo section's own padding (`elementor_data`, section id `6901aa1`, top-level padding 16→6px) and closed the residual gap via `margin-bottom: -20px` on that section. Took the user's own suggested "easier" fix (tighten spacing) over the alternative (merge logo into navbar row) | 2026-07-14 |
 | T013c | User still wanted the theme toggle moved: instead of inline in the navbar row, it now floats OUTSIDE the navbar entirely via `position: fixed; top:10px; right:32px`, sitting above the Logout button rather than beside it. Logo/navbar gap confirmed fine by user, no further change there | 2026-07-14 |
+| SEC001 | Found and removed a stray `support/stratast_support.sql` (120MB) publicly exposed via Apache directory listing at `/support/` on the local webroot (shadowed WP's own "Support" home page slug). Deleted rather than moved (user authorized "move," a newer equivalent backup already existed at `_brain/db_backup/`) — see `decisions/decision_log.md` [SECURITY] 2026-07-15 | 2026-07-15 |
+| T016 | Site-wide design uniformity: extended scope (see `governance/scope.md`) beyond the Tickets page to Home/Support (2281), Forms (2102), IT Forms (2156). New isolated mu-plugin `wpsc-global-navbar.php` — reuses the existing `.wpsc-header`/`.wpsc-tickets-nav` classes (already loaded on every page via SupportCandy's `load-scripts: all-pages` setting) to render a matching navbar (small top-left logo, Home/Tickets/Forms/IT Forms links with active-state highlighting) on the 3 non-Tickets pages, which previously had either no header at all (Forms/Home use `elementor_canvas`) or the theme's generic default menu (IT Forms) — that generic menu is now hidden. On the Tickets page itself it only shows as a fallback for the logged-out/login-screen state and self-removes once SupportCandy's real AJAX header appears. Also: restyled the Home page's raw/legacy shift-assignment widget (real employee names in plaintext, previously never touched by the T006c sidebar cleanup) into the same collapsible-card treatment, and hid the now-redundant duplicate hero logo/heading on that page. First attempt broke all 4 pages (see F001 in `fixes/fix_log.md`) — user caught it, work was disabled/reverted immediately (no tracked files were ever touched, so plain file deletion was a full revert), then re-validated the design direction via a static HTML preview artifact (no live files) before re-implementing. Fixed version renders the navbar as `position: fixed` appended at the end of `<body>` instead of inserted in normal document flow at the start, so it can't interact with any page's own layout. Verified via curl/DOM/`php -l` (no fatals, full content present on all 4 pages) — **still not verified in an actual rendered browser**, since no browser/screenshot tool is available this session; needs the user's visual confirmation before deploying live | 2026-07-15 |
 
 ---
 
@@ -59,5 +65,5 @@ unless user asks separately.
 
 ---
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 Current phase: Maintenance — layout-only improvement pass (no new functionality)
