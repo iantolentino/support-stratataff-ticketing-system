@@ -10,22 +10,23 @@ EXECUTION_MODE
 
 ## Current Phase
 Maintenance — layout-only improvement pass (no new functionality; see `governance/scope.md`).
-Local rebuild is functionally done; next real milestone is deploying it to the live cPanel site.
+**Live deploy (T015) is done.** The site's whole local rebuild is now on production. Any further
+work from here is a fresh, incremental change on top of a live, working site — not a first deploy.
 
 ## Last Completed Task
-T016/T016a/T016b — Navbar/design uniformity between Home/Support (2281) and Tickets (5422) ONLY
-(scope was briefly extended to Forms/IT Forms, then explicitly narrowed back per user request —
-those two pages are fully untouched). Includes fixing F002, a real bug where an earlier pass
-hardcoded a JS snapshot of live shift-assignment data instead of relocating the actual live
-element. User visually confirmed the final result in a real browser, including confirming a live
-edit (one roster entry's shift, changed via "Assisting Ticket #") correctly appeared. Also SEC001 (removed
-a publicly-exposed local DB dump, unrelated to the navbar work). See `progress/progress.md`.
+T015 — Live deploy, completed and user-confirmed working in a real browser. All 7 files (4
+mu-plugins + 3 edited plugin files) uploaded via cPanel File Manager to
+`support.stratastaffglobal.com`. One live-only cleanup needed after upload: an oversized "Ticketing
+System" heading widget still showed on the Tickets page — this lives in Elementor's `_elementor_data`
+(database, not a file), and its removal (done locally in an earlier session) had never been
+re-applied to the live DB. Fixed by deleting the widget directly in the live page's Elementor
+editor. See `progress/progress.md` T015 for full detail, and T016/T016a/T016b for the navbar
+uniformity work that preceded it (including F002, a real bug where shift-assignment data was
+briefly hardcoded instead of live — fixed before this deploy).
 Completed: 2026-07-15
 
 ## Next Task
-T015 — Deploy the confirmed layout changes to the live cPanel site (`support.stratastaffglobal.com`)
-Depends on: T016b (done, user-confirmed). This is now the next real action — no remaining
-verification blocker.
+None queued. Awaiting the user's next request.
 
 ## Active Blockers
 None. `wp-admin/*` is broken locally (pre-existing bug, see `db_backup/backup_policy.md`) but
@@ -105,16 +106,22 @@ wp-admin) was redesigned in place, CSS/JS/PHP only, zero DB schema or backend lo
 - Repo is PUBLIC — never commit real employee names, passwords, or other PII into `_brain/` docs
   or plugin files going forward; grep for names before every push if a file touches
   Multi-Input-Text-Display-Plugi/shift-assignment data specifically (see F002)
-- T015 (live deploy) is uploading 7 files to matching paths on cPanel: the 3 previously-deployed
+- **T015 is DONE.** All 7 files are now live on `support.stratastaffglobal.com`: 3 edited plugin
   files (`framework/style.css`, `class-wpsc-shortcode-one.php`, `text-display-plugin.php`) + 4
   mu-plugins (`wpsc-theme-toggle.php`, `wpsc-modern-table.php`, `wpsc-navbar-redesign.php`,
-  `wpsc-global-navbar.php`). No DB import, no downtime risk, fully reversible by deleting the 4
-  mu-plugin files or restoring the other 3 from `_brain/ui_backups/`.
-- Before deploying: verify live page IDs for "Support"/Home and "Tickets" match local (`2281` and
-  `5422`) — `wpsc-global-navbar.php` hardcodes these. Local DB was seeded from a live export so
-  they very likely match, but this wasn't independently re-verified against the live site this
-  session. If they don't match, just update the `is_page()` array and the `LINKS`/`$current_id`
-  logic in that one file — not a rebuild.
+  `wpsc-global-navbar.php`, in a `wp-content/mu-plugins/` folder that didn't exist on live before —
+  the user created it). User downloaded the live originals of the 3 edited files first as a manual
+  revert point before overwriting; the 4 mu-plugins are net-new so revert = just delete them.
+- Live page IDs for "Support"/Home and "Tickets" DO match local (`2281` and `5422`, confirmed
+  working after deploy — `wpsc-global-navbar.php`'s navbar/logo/shift-widget rendered correctly).
+- **Important gotcha, confirmed in practice during this deploy:** file-based changes (CSS/PHP/JS)
+  deploy via upload, but **Elementor page layout is stored in the database** (`_elementor_data` in
+  `wp_postmeta`) and does NOT travel with file uploads. Any local Elementor edit (widget
+  removed/resized/repositioned) needs to be manually re-applied on the live page's own Elementor
+  editor — it will NOT show up just because the plugin/theme files were uploaded. This bit us once
+  already (the T009a "Ticketing System" heading removal wasn't live until fixed by hand in
+  Elementor post-deploy) — check for this class of gap on any future deploy that included Elementor
+  edits.
 
 ---
 
