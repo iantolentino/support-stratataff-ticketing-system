@@ -16,21 +16,20 @@ function wpsc_theme_toggle_output() {
 	?>
 	<style id="wpsc-theme-toggle-styles">
 	/* ---- Toggle button ---- */
+	/* Placed inline in the navbar now (see script below) rather than floating fixed outside it,
+	   per later feedback — colored solid black so it reads clearly against the white navbar. */
 	.wpsc-theme-toggle-btn {
-		position: fixed;
-		top: 10px;
-		right: 32px;
-		z-index: 9999;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		width: 32px;
 		height: 32px;
+		margin-right: 6px;
 		border-radius: 8px;
 		background: #f3f6f6;
 		border: 1px solid #e4e7ec;
 		cursor: pointer;
-		color: #5b6b6a;
+		color: #000000;
 		flex-shrink: 0;
 	}
 	.wpsc-theme-toggle-btn:hover {
@@ -195,8 +194,14 @@ function wpsc_theme_toggle_output() {
 				btn.innerHTML = iconFor(next);
 			});
 
-			// Float above the navbar (outside it), aligned above the Logout button.
-			document.body.appendChild(btn);
+			// Placed inside the navbar itself, immediately before Logout (superseding an earlier
+			// version that floated it fixed outside the navbar — moved back in per later feedback).
+			var logout = navbar.querySelector('.log-out');
+			if (logout && logout.parentNode) {
+				logout.parentNode.insertBefore(btn, logout);
+			} else {
+				navbar.appendChild(btn);
+			}
 		}
 
 		if (document.readyState === 'loading') {

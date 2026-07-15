@@ -231,7 +231,14 @@ function wpsc_navbar_redesign_output() {
 			moved = true;
 		}
 
-		document.addEventListener('click', function () { closeAllDropdowns(); });
+		document.addEventListener('click', function (e) {
+			// Don't close a panel because of a click on its OWN contents (e.g. the "Update"
+			// button or a <select> inside "Assisting Ticket #") — only close on a true
+			// click-outside. Without this check, submitting that form closed the panel before
+			// the click could register, making it look broken.
+			if (e.target.closest('.wpsc-nav-dropdown')) return;
+			closeAllDropdowns();
+		});
 
 		if (document.readyState === 'loading') {
 			document.addEventListener('DOMContentLoaded', relocate);

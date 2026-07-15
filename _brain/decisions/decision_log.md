@@ -95,13 +95,15 @@ Date: 2026-07-15
 
 ---
 
-[SECURITY] → `wpsc-global-navbar.php` is deliberately kept OUT of git (not force-added), even
-though 3 sibling mu-plugins are tracked.
+[SECURITY] → `wpsc-global-navbar.php` was deliberately kept OUT of git for one work session
+(2026-07-15), then added normally once F002 was fixed.
 Impact: medium
-Reason: This file hardcodes the same real employee names/shift-assignment data that was already
-the subject of a redaction decision (T014, `[STACK]`/`current_state.md`) because this repo is
-public. A local-only timestamped copy lives instead at `_brain/ui_backups/` (git-ignored, same as
-the rest of that folder) — use `ui-restore.ps1` to roll back, not git, for this specific file.
+Reason: An earlier version hardcoded the same real employee names/shift-assignment data that was
+already the subject of a redaction decision (T014) because this repo is public. The F002 fix
+(`fixes/fix_log.md`) removed that hardcoded array entirely — the file now only relocates the real
+live DOM node and never re-types its values — so `grep`-confirmed clean of employee names before
+being force-added to git. If this file is ever touched again, re-run that grep before committing;
+do not assume it stays clean by default.
 Date: 2026-07-15
 
 ---
