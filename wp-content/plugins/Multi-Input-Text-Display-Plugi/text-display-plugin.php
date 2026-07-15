@@ -60,7 +60,7 @@ function tdp_admin_page() {
 
 // Get person name based on index
 function tdp_get_person_name($index) {
-    $names = ['Riel', 'Dave', 'Kenneth', 'Jesse', 'Jhansi']; // Added Jhansi
+    $names = ['Agent 1', 'Agent 2', 'Agent 3', 'Agent 4', 'Agent 5'];
     return isset($names[$index - 1]) ? $names[$index - 1] : 'Unknown';
 }
 

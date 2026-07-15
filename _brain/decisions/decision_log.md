@@ -123,3 +123,18 @@ header appears, so logged-in agents/customers still see the original untouched h
 Date: 2026-07-15
 
 ---
+
+[SECURITY] → Replaced hardcoded real employee names with generic labels ("Agent 1"–"Agent 5") in
+`Multi-Input-Text-Display-Plugi/text-display-plugin.php`'s `tdp_get_person_name()` function.
+Impact: low
+Reason: Found during a post-deploy audit — these names had been in the plugin's own source code
+(not `_brain/` docs) since this repo's very first commit, predating this session and predating the
+T014 doc-redaction pass, which only covered `_brain/`. This repo is public; a hardcoded name array
+in committed PHP is the same exposure as one in a doc. Purely a display-label change — the
+`update_option`/`get_option` calls, the option keys (`tdp_display_text_N`, `tdp_shift_schedule_N`),
+and all saved data are untouched; only the label shown next to each numbered slot changed. Not yet
+re-deployed to the live site as of this writing — the live copy of this file still has the real
+names until the corrected version is uploaded.
+Date: 2026-07-15
+
+---

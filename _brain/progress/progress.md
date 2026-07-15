@@ -6,8 +6,12 @@
 ---
 
 ## Active Task
-> None — T015 (live deploy) complete. All layout work from this session is now live on
-> `support.stratastaffglobal.com`, user-confirmed working in a real browser.
+> One small pending item: F004 (`fixes/fix_log.md`) fixed real employee names hardcoded in
+> `text-display-plugin.php`'s source LOCALLY, but that file was already live from T015's deploy
+> with the old names still in it — **the corrected file needs a follow-up re-upload to
+> `support.stratastaffglobal.com` (wp-content/plugins/Multi-Input-Text-Display-Plugi/) whenever the
+> user is next in cPanel.** Not urgent (site works fine either way, this is a labels-only PII
+> cleanup) but shouldn't be forgotten.
 
 ---
 
@@ -47,6 +51,7 @@
 | T016a | Scope narrowed to Home (2281) + Tickets (5422) only per explicit user request — Forms/IT Forms fully reverted, zero references left in the plugin | 2026-07-15 |
 | T016b | Fixed F002 (see `fixes/fix_log.md`): an earlier pass had hardcoded a JS snapshot of the "Shift Assignments" roster instead of relocating the real live widget (`[text_display]` shortcode, reads `wp_options` written by "Assisting Ticket #"), silently breaking live updates. Rebuilt to relocate (never clone) the actual DOM node below the navbar on Home's ticket-list view only, restyled into a card grid by reading each cell's live value and rebuilding clean markup around it. User confirmed the fix by editing one roster entry's shift via "Assisting Ticket #" and seeing it correctly reflected. Also fixed in this pass: logo unified to the same in-navbar JS-inserted mechanism on both pages (was 130px via JS on Home vs. a separate 160px Elementor widget beside the navbar on Tickets — now both 160px, inserted identically, old Tickets widget hidden); theme toggle moved from a fixed floating button back into the navbar itself (colored black for visibility, superseding T013c); Home page's boxed Elementor section (839b455) set to full-width matching the T009d fix already applied to Tickets; shift-assignment card was rendering behind/under the floated `.wpsc-header` (SupportCandy's own `float:left` with no clearfix) — added `clear:both`. `wpsc-global-navbar.php` no longer contains any employee names after this fix (confirmed via grep) — added to git normally, superseding the earlier local-only-backup decision | 2026-07-15 |
 | T015 | Live deploy — the site's very first deployment of any of this project's layout work. User uploaded 7 files to `support.stratastaffglobal.com` via cPanel File Manager: 4 new mu-plugins (`wpsc-global-navbar.php`, `wpsc-modern-table.php`, `wpsc-navbar-redesign.php`, `wpsc-theme-toggle.php`, into a newly-created `wp-content/mu-plugins/` folder — it didn't exist on live before) + 3 edited existing plugin files (`text-display-plugin.php`, `framework/style.css`, `class-wpsc-shortcode-one.php`, overwritten in place after downloading the live originals first as a manual revert point). No DB import, no downtime. One live-only issue surfaced after upload: an oversized "Ticketing System" heading still showed at the top of the Tickets page — this was a **database-side** leftover (Elementor stores page layout as JSON in `wp_postmeta`, and that widget's removal, done locally in an earlier session, was never re-applied to the live DB per the project's manual-dual-apply DB rule, decisions/decision_log.md). Fixed by deleting the widget directly in Elementor's live page editor — not a file, so nothing to upload for that part. User confirmed the full result working correctly in a real browser: navbar, logo, theme toggle, red Assisting Ticket #/Shift Assignments, stat tiles, and ticket table all rendering as expected | 2026-07-15 |
+| F004 | Post-deploy PII audit: grepped all tracked repo files (not just this session's) for the 5 employee names and found them hardcoded in `Multi-Input-Text-Display-Plugi/text-display-plugin.php`'s own `tdp_get_person_name()` function — present since this repo's first commit, predating this session and the earlier T014 doc-only redaction. Replaced with generic labels ("Agent 1"–"Agent 5"), a display-label-only change (no option keys or saved data touched). Fixed locally and pushed to GitHub; **the live site still has the old file from the T015 deploy** — needs a follow-up re-upload, tracked in Active Task above | 2026-07-15 |
 
 ---
 

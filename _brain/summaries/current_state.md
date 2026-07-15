@@ -26,7 +26,13 @@ briefly hardcoded instead of live — fixed before this deploy).
 Completed: 2026-07-15
 
 ## Next Task
-None queued. Awaiting the user's next request.
+One small pending item, not urgent: F004 (`fixes/fix_log.md`) replaced hardcoded real employee
+names with generic labels in `Multi-Input-Text-Display-Plugi/text-display-plugin.php`, fixed and
+pushed to GitHub locally — but that exact file was already uploaded live during T015 with the old
+names still in it. Next session (or whenever the user is next in cPanel) should re-upload the
+corrected `text-display-plugin.php` to `support.stratastaffglobal.com/wp-content/plugins/
+Multi-Input-Text-Display-Plugi/`. Site works fine either way in the meantime; this is a PII
+cleanup, not a functional issue.
 
 ## Active Blockers
 None. `wp-admin/*` is broken locally (pre-existing bug, see `db_backup/backup_policy.md`) but
